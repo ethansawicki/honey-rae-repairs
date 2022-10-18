@@ -26,7 +26,7 @@ export const TicketList = () => {
     useEffect(
         () => {
             const fetchData = async () => {
-                const response = await fetch(`http://localhost:8088/serviceTickets`)
+                const response = await fetch(`http://localhost:8089/serviceTickets`)
                 const ticketArray = await response.json()
                 setTickets(ticketArray)
             }
