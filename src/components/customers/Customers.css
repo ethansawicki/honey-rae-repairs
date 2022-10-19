@@ -1,0 +1,20 @@
+.customers {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.customer {
+    background-color: white;
+    border: 2px dotted black;
+    color: black;
+    padding: 0.5rem;
+    margin: 0.5rem;
+}
+
+.customer-header {
+    font-size: larger;
+    font-weight: 700;
+    line-height: 3rem;
+}
