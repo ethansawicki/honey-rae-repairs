@@ -3,6 +3,7 @@ import CustomerDetails from "../customers/CustomerDetails"
 import CustomerList from "../customers/CustomerList"
 import EmployeeDetails from "../employees/EmployeeDetails"
 import EmployeeList from "../employees/EmployeeList"
+import Profile from "../profiles/Profile"
 import { TicketsContainer } from "../tickets/TicketsContainer"
 
 export const EmployeeViews = () => {
@@ -18,6 +19,7 @@ export const EmployeeViews = () => {
 			}>
 					<Route path="tickets" element={<TicketsContainer />} />
                     <Route path="employees" element={<EmployeeList />} />
+					<Route path="profile" element={<Profile />} />
 					<Route path="employees/:employeeId" element={ <EmployeeDetails /> } />
 					<Route path="customers" element={<CustomerList />} />
 					<Route path="customers/:customerId" element={<CustomerDetails />} />
