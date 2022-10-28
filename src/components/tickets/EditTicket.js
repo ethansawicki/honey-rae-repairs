@@ -44,7 +44,7 @@ const EditTicket = () => {
          const response = await fetch(`http://localhost:8088/serviceTickets/${ticket.id}`, put)
          await response.json()
          setFeedback(`Updated Ticket ${ticket.id}`)
-         setTimeout(() => {navigate("/tickets")}, 5030)
+         setTimeout(() => {navigate("/tickets")}, 5010)
       }
       updateTicketData()
    }
