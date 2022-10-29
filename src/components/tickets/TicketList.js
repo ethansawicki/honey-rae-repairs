@@ -5,6 +5,7 @@ import "./tickets.css"
 
 export const TicketList = ({searchTermState}) => {
     const [tickets, setTickets] = useState([])
+    const [employee, setEmployee] = useState([])
     const [filteredTickets, setFiltered] = useState([])
     const [emergency, setEmergency] = useState(false)
     const [openOnly, updateOpenOnly] = useState(false)
@@ -22,16 +23,24 @@ export const TicketList = ({searchTermState}) => {
         [searchTermState]
     )
 
+    const fetchEmployeeTickets = async () => {
+        const response = await fetch(`http://localhost:8088/serviceTickets?_embed=employeeTickets`)
+        const ticketArray = await response.json()
+        setTickets(ticketArray)
+    }
+    
+
     useEffect(
         () => {
-            const fetchData = async () => {
-                const response = await fetch(`http://localhost:8088/serviceTickets`)
-                const ticketArray = await response.json()
-                setTickets(ticketArray)
+            fetchEmployeeTickets()
+            const fetchEmployee = async () => {
+                const response = await fetch(`http://localhost:8088/employees?_expand=user`)
+                const employees = await response.json()
+                setEmployee(employees)
             }
-            fetchData()
+            fetchEmployee()
         },
-        [] //When this array is empty, you are observing initial component state
+        [] //When this array is empty, you are observing initial component state 
     )
 
     useEffect(
@@ -99,12 +108,7 @@ export const TicketList = ({searchTermState}) => {
     <article className="tickets">
         {
             filteredTickets.map(
-                (ticket) => <Ticket 
-                key={ticket.id}
-                id={ticket.id}
-                description={ticket.description}
-                emergency={ticket.emergency}
-                />
+                (ticket) => <Ticket key={ticket.id} employee={employee} fetchEmployeeTickets={fetchEmployeeTickets} ticket={ticket} currentUser={honeyUserObject} />
             )
         }
     </article>
