@@ -9,3 +9,11 @@
     padding: 0.7rem;
     margin: 0.5rem 0;
 } 
+
+.ticket-finish {
+    margin-left: auto;
+}
+
+.ticket-delete {
+    margin-left: auto;
+}

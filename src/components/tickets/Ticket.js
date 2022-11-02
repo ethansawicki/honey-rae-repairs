@@ -10,6 +10,54 @@ const Ticket = ({ticket, currentUser, employee, fetchEmployeeTickets}) => {
     assignedEmployee = employee.find(employee => employee.id === ticketEmployeeRelationship.employeeId)
   }
 
+  const canClose = () => {
+    if (userEmployee?.id === assignedEmployee?.id && ticket.dateCompleted === "") {
+      return <button className='ticket-finish' onClick={closeTicket}>Finish</button>
+    } else {
+      return ''
+    }
+  }
+
+  const deleteButton = () => {
+    if (!currentUser.staff) {
+      return <button className='ticket-delete' onClick={() => {
+        const deleteTicket = async () => {
+          const res = await fetch(`http://localhost:8088/serviceTickets/${ticket.id}`, {
+            method: "DELETE"
+        })
+          await res.json()
+          fetchEmployeeTickets()
+        }
+        deleteTicket()
+      }}>Delete</button>
+    } else {
+      return ''
+    }
+  }
+
+  const closeTicket = () => {
+    const copy = {
+      userId: ticket.userId,
+      description: ticket.description,
+      emergency: ticket.emergency,
+      dateCompleted: new Date()
+    }
+
+    const completeTicket = async () => {
+      const put = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(copy)
+      }
+      const res = await fetch(`http://localhost:8088/serviceTickets/${ticket.id}`, put)
+      await res.json()
+      fetchEmployeeTickets()
+    }
+    completeTicket()
+  }
+
   const buttonOrNoButton = () => {
     if(currentUser.staff) {
       return <button onClick={() => {
@@ -52,6 +100,12 @@ const Ticket = ({ticket, currentUser, employee, fetchEmployeeTickets}) => {
             ticket.employeeTickets.length
             ? `Current Owner: ${assignedEmployee !== null ? assignedEmployee?.user?.fullName : ""}`
             : buttonOrNoButton()
+          }
+          {
+            canClose()
+          }
+          {
+            deleteButton()
           }
         </footer>
     </section>
